@@ -1,0 +1,20 @@
+{
+  "name": "send-deployment-status-to-telegram",
+  "version": "1.0.0",
+  "description": "Send deployment status to telegram channel",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/UladzimirSukharukau/send-deployment-status-to-telegram.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/UladzimirSukharukau/send-deployment-status-to-telegram/issues"
+  },
+  "homepage": "https://github.com/UladzimirSukharukau/send-deployment-status-to-telegram#readme",
+  "dependencies": {
+    "@actions/core": "^1.4.0",
+    "@actions/github": "^5.0.0"
+  }
+}

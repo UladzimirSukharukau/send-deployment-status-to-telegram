@@ -1,0 +1,20 @@
+name: "Send deployment status to telegram channel"
+description: "Greet someone and record the time"
+inputs:
+  service-header:
+    description: "Name of the service with possible additional information or characters."
+    required: true
+  deployed-to:
+    description: "Environment where deployment happening. Default is ENV_PREFIX variable"
+  bot-token:
+    description: "Telegram bot token"
+    required: true
+  chat-id:
+    description: "Telegram chat id"
+    required: true
+  status:
+    description: "Job status. Use job.status to get current job status."
+    required: true
+runs:
+  using: "node12"
+  main: "index.js"
