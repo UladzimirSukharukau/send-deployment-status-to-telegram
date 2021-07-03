@@ -8,22 +8,19 @@ const GITHUB_RUN_ID = process.env.GITHUB_RUN_ID;
 const GITHUB_SHA = process.env.GITHUB_SHA;
 
 try {
-  const serviceHeader = core.getInput("service-header");
-  const deployedTo = ENV_PREFIX || core.getInput("deployed-to");
-  const botToken = core.getInput("bot-token");
-  const chatId = core.getInput("chat-id");
-  const status = core.getInput("status");
+  const serviceHeader = core.getInput("service-header", { required: true });
+  const deploymentTo = ENV_PREFIX || core.getInput("deployment-to", { required: false });
+  const botToken = core.getInput("bot-token", { required: true });
+  const chatId = core.getInput("chat-id", { required: true });
+  const status = core.getInput("status", { required: true });
 
-  if (!serviceHeader) throw new Error("serviceHeader argument not set");
-  if (!botToken) throw new Error("bot-token argument not set");
-  if (!chatId) throw new Error("chat-id argument not set");
-  if (!status) throw new Error("status argument not set");
+  if (!deploymentTo) throw new Error("Neither deployment-to argument nor ENV_PREFIX env variable was set");
 
   let url = `https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&parse_mode=HTML&text=`;
   let text = "";
 
   const statusStr = status === "success" ? "succeeded" : status === "failure" ? "failed" : "cancelled";
-  let header = `<b>${serviceHeader} <a href='https://github.com/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}'>deployment</a> to ${deployedTo} ${statusStr}</b>`;
+  let header = `<b>${serviceHeader} <a href='https://github.com/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}'>deployment</a> to ${deploymentTo} ${statusStr}</b>`;
   if (status === "failure") header = `‼️ ${header} ‼️`;
   if (status === "cancelled") header = `❗️ ${header} ❗️`;
   text += header;
@@ -43,6 +40,8 @@ try {
   text += `%0A${message}`;
 
   url += text;
+
+  console.log("URL that will be used:", url);
 
   https
     .get(url, (resp) => {

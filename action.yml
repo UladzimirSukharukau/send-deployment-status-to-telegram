@@ -1,10 +1,10 @@
 name: "Send deployment status to telegram channel"
-description: "Greet someone and record the time"
+description: "Send deployment status to telegram channel"
 inputs:
   service-header:
     description: "Name of the service with possible additional information or characters."
     required: true
-  deployed-to:
+  deployment-to:
     description: "Environment where deployment happening. Default is ENV_PREFIX variable"
   bot-token:
     description: "Telegram bot token"
