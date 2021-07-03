@@ -35,6 +35,10 @@ try {
   message = message.split("\n")[0];
   message = message.replace(/</g, "&lt;").replace(/>/g, "&gt;");
   message = message.replace(/[#&/+]/g, (c) => `%${c.charCodeAt(0).toString(16)}`);
+  message = message.replace(
+    /CR-\d+/g,
+    (task) => `<a href='https://crystalroof.atlassian.net/browse/${task}'>${task}</a>`
+  );
 
   text += `%0A${message}`;
 
