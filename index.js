@@ -36,6 +36,10 @@ try {
     /CR-\d+/g,
     (task) => `<a href='https://crystalroof.atlassian.net/browse/${task}'>${task}</a>`
   );
+  message = message.replace(/\(%23\d+\)$/g, (s) => {
+    const pr = s.substr(4, s.length - 5);
+    return `(<a href='https://github.com/UladzimirSukharukau/CrystalRoof/pull/${pr}'>%23${pr}</a>)`;
+  });
 
   text += `%0A${message}`;
 
